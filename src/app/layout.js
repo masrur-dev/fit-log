@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
         <FitLogProvider>
           <Navbar />
           {children}
-          <footer className="app-footer"><div className="footer-shell"><LinkBrand/><p>© 2026 FitLog — Work smarter. Train hard, log honest.</p></div></footer>
+          <footer className="app-footer"><div className="footer-shell"><LinkBrand/><p>© 2026 FitLog</p></div></footer>
         </FitLogProvider>
       </body>
     </html>

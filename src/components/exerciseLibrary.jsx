@@ -10,19 +10,19 @@ export default function ExerciseLibrary() {
         {/* Header */}
         <div className="mb-12">
           <div className="max-w-3xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-lime-400">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-[#b4c77c]">
               THE LIBRARY
             </p>
 
             <h2 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
-              Twelve lifts covering every major muscle group.
+              Workout library
             </h2>
           </div>
 
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="exercise-grid gap-3 sm:gap-4">
             {exercises.map((exercise) => (
               <ExerciseCard key={exercise.id} exercise={exercise} />
             ))}

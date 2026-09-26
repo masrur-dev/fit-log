@@ -8,14 +8,14 @@ export default function Hero() {
       <div className="mx-auto grid min-h-[680px] max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 lg:min-h-[760px]">
         {/* Left */}
         <div>
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-lime-400">
+          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-[#b4c77c]">
             Train smarter
           </p>
 
           <h1 className="max-w-3xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-8xl">
             Train Better.
             <br />
-            <span className="text-lime-400">Live Stronger.</span>
+            <span className="text-[#b4c77c]">Live Stronger.</span>
           </h1>
 
           <p className="mt-7 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
@@ -25,7 +25,7 @@ export default function Hero() {
 
           <Link
             href="#library"
-            className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#b8df35] px-6 py-3 font-bold text-black transition hover:bg-[#c4e85a]"
+            className="hero-cta-button mt-9 inline-flex items-center gap-3 rounded-full px-6 py-3 font-bold transition"
           >
             Explore Library
             <ArrowDownRight size={18} />

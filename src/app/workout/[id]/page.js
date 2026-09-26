@@ -57,7 +57,7 @@ const WorkoutDetails = () => {
 
           <Link
             href="/"
-            className="mt-5 inline-flex rounded-full bg-[#ccff00] px-5 py-2 text-sm font-bold text-black"
+            className="mt-5 inline-flex rounded-full bg-[#b4c77c] px-5 py-2 text-sm font-bold text-[#20251a]"
           >
             Back to workouts
           </Link>
@@ -94,7 +94,7 @@ const WorkoutDetails = () => {
           <div className="details-copy">
             {/* Categories */}
             <div className="mb-5 flex flex-wrap gap-2">
-              <span className="rounded-full bg-[#ccff00]/10 px-3 py-1 text-xs font-semibold text-[#ccff00]">
+              <span className="rounded-full bg-[#b4c77c]/10 px-3 py-1 text-xs font-semibold text-[#b4c77c]">
                 {exercise.category}
               </span>
 
@@ -177,7 +177,7 @@ const WorkoutDetails = () => {
             {/* Instructions */}
             {exercise.instructions && (
               <div className="mt-8">
-                <h2 className="text-sm font-bold tracking-widest text-[#ccff00]">
+                <h2 className="text-sm font-bold tracking-widest text-[#b4c77c]">
                   INSTRUCTIONS
                 </h2>
 
@@ -202,7 +202,7 @@ const WorkoutDetails = () => {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <button
                 onClick={handleAddToPlan}
-                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#ccff00] px-6 py-3 text-sm font-bold text-black transition hover:bg-[#b8e600]"
+                className="flex flex-1 items-center justify-center gap-2 rounded-full bg-[#b4c77c] px-6 py-3 text-sm font-bold text-[#20251a] transition hover:bg-[#c2d796]"
               >
                 <Plus size={17} />
                 Add to today's plan
@@ -223,7 +223,7 @@ const WorkoutDetails = () => {
       {/* Toast */}
       {message && (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 rounded-xl border border-white/10 bg-[#111318] px-5 py-3 text-sm text-white shadow-2xl">
-          <Check size={17} className="text-[#ccff00]" />
+          <Check size={17} className="text-[#b4c77c]" />
 
           {message}
         </div>
