@@ -1,0 +1,7 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight, Activity, Target, Zap } from "lucide-react";
+
+export default function Hero() {
+  return <section className="hero-wrap"><div className="hero-copy"><span className="eyebrow hero-eyebrow"><span className="live-dot"/> YOUR PERSONAL TRAINING LOG</span><h1>Show up.<br/>Put in the <span>work.</span></h1><p>Build a training plan that fits your day. Find the right lift, keep your sessions organized, and get a little stronger every time.</p><div className="hero-actions"><Link className="primary-button" href="#workouts">Explore workouts <ArrowUpRight size={17}/></Link><Link className="secondary-button" href="/my-plan">View today’s plan</Link></div><div className="hero-proof"><div><Activity/><span><strong>12</strong><small>guided lifts</small></span></div><div><Target/><span><strong>6</strong><small>muscle groups</small></span></div><div><Zap/><span><strong>1</strong><small>stronger you</small></span></div></div></div><div className="hero-visual"><div className="hero-orbit orbit-one"/><div className="hero-orbit orbit-two"/><div className="hero-photo"><Image src="/workout.jpg" alt="Illustrated athlete ready to train" fill priority sizes="(max-width: 800px) 100vw, 50vw"/></div><div className="hero-note"><span className="note-icon"><Zap size={17}/></span><span><strong>YOUR NEXT REP</strong><small>starts right here</small></span><ArrowDown className="note-arrow" size={16}/></div><span className="hero-index">FITLOG / 001</span></div></section>;
+}
