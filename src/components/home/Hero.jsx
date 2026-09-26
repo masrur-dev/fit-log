@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { ArrowDownRight } from "lucide-react";
+import bannerImage from "./banner-img.png";
 
 export default function Hero() {
   return (
     <section className="bg-[#0b0c10]">
-      <div className="mx-auto grid min-h-[650px] max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 lg:min-h-[720px]">
+      <div className="mx-auto grid min-h-[680px] max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 lg:min-h-[760px]">
         {/* Left */}
         <div>
           <p className="mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-lime-400">
@@ -24,7 +25,7 @@ export default function Hero() {
 
           <Link
             href="#library"
-            className="mt-9 inline-flex items-center gap-3 rounded-full bg-lime-400 px-6 py-3 font-bold text-black transition hover:bg-lime-300"
+            className="mt-9 inline-flex items-center gap-3 rounded-full bg-[#b8df35] px-6 py-3 font-bold text-black transition hover:bg-[#c4e85a]"
           >
             Explore Library
             <ArrowDownRight size={18} />
@@ -34,7 +35,7 @@ export default function Hero() {
         {/* Right image */}
         <div className="relative h-[380px] overflow-hidden rounded-3xl md:h-[520px]">
           <img
-            src="/images/banner-img.png"
+            src={bannerImage.src}
             alt="Workout"
             className="h-full w-full object-cover"
           />

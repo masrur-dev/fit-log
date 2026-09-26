@@ -260,3 +260,9 @@
     min-width: 170px;
   }
 }
+
+.card-image:after{opacity:0;transition:opacity .25s}
+.exercise-card:hover .card-image:after{opacity:1}
+.primary-button,.plan-empty>a,.row-actions button.done,.details-copy button:first-of-type{background:#b8df35}
+.primary-button:hover,.plan-empty>a:hover,.row-actions button.done:hover,.details-copy button:first-of-type:hover{background:#c4e85a}
+.plan-tabs button.active{background:#b8df35}
