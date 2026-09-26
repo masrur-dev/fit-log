@@ -1,8 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { SlidersHorizontal } from "lucide-react";
-
 import ExerciseCard from "./exerciseCard";
 import { exercises } from "../data/exercises";
 
@@ -16,122 +15,61 @@ const categories = [
   "Core",
 ];
 
-const sortOptions = [
-  { label: "Duration", value: "duration" },
-  { label: "Calories", value: "calories" },
-  { label: "Ratings", value: "rating" },
-];
-
 export default function ExerciseLibrary() {
   const [category, setCategory] = useState("All");
-  const [sortBy, setSortBy] = useState("");
 
-  const filtered = useMemo(() => {
-    const result = exercises.filter(
-      (exercise) =>
-        category === "All" ||
-        exercise.category === category ||
-        exercise.secondaryCategory === category,
-    );
-
-    if (sortBy === "duration") {
-      return [...result].sort((a, b) => {
-        const aTime = parseInt(a.time) || 0;
-        const bTime = parseInt(b.time) || 0;
-
-        return aTime - bTime;
-      });
-    }
-
-    if (sortBy === "calories") {
-      return [...result].sort((a, b) => {
-        const aCalories = parseInt(a.calories) || 0;
-        const bCalories = parseInt(b.calories) || 0;
-
-        return bCalories - aCalories;
-      });
-    }
-
-    if (sortBy === "rating") {
-      return [...result].sort((a, b) => {
-        return Number(b.rating) - Number(a.rating);
-      });
-    }
-
-    return result;
-  }, [category, sortBy]);
+  const filteredExercises =
+    category === "All"
+      ? exercises
+      : exercises.filter(
+          (exercise) =>
+            exercise.category?.toLowerCase() === category.toLowerCase(),
+        );
 
   return (
-    <section id="workouts" className="library-section">
-      <div className="section-heading">
-        <div>
-          <span className="eyebrow">THE LIBRARY</span>
+    <section id="library" className="bg-[#0b0c10] px-5 py-24 sm:py-28">
+      <div className="mx-auto max-w-7xl">
+        {/* Header */}
+        <div className="mb-12 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-3xl">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-lime-400">
+              THE LIBRARY
+            </p>
 
-          <h2>Find your next lift.</h2>
+            <h2 className="text-3xl font-black tracking-tight text-white sm:text-5xl">
+              Twelve lifts covering every major muscle group.
+            </h2>
+          </div>
 
-          <p>Twelve lifts covering every major muscle group.</p>
+          {/* Filter */}
+          <div className="flex items-center gap-2 overflow-x-auto rounded-xl border border-white/10 bg-[#111216] p-1">
+            <div className="flex shrink-0 items-center px-3 text-zinc-500">
+              <SlidersHorizontal size={16} />
+            </div>
+
+            {categories.map((item) => (
+              <button
+                key={item}
+                onClick={() => setCategory(item)}
+                className={`shrink-0 rounded-lg px-4 py-2 text-sm font-semibold transition ${
+                  category === item
+                    ? "bg-lime-400 text-black"
+                    : "text-zinc-400 hover:bg-white/5 hover:text-white"
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
 
-        <span className="result-count">{filtered.length} WORKOUTS</span>
-      </div>
-
-      <div className="library-tools">
-        <div className="category-filters" aria-label="Filter by muscle group">
-          <SlidersHorizontal size={16} />
-
-          {categories.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className={
-                category === item ? "filter-chip active" : "filter-chip"
-              }
-              onClick={() => setCategory(item)}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
-
-        <div className="sort-options">
-          <span className="sort-label">SORT BY</span>
-
-          {sortOptions.map((option) => (
-            <button
-              key={option.value}
-              type="button"
-              className={
-                sortBy === option.value ? "sort-button active" : "sort-button"
-              }
-              onClick={() =>
-                setSortBy((current) =>
-                  current === option.value ? "" : option.value,
-                )
-              }
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {filtered.length ? (
-        <div className="exercise-grid">
-          {filtered.map((exercise) => (
+        {/* Cards */}
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredExercises.map((exercise) => (
             <ExerciseCard key={exercise.id} exercise={exercise} />
           ))}
         </div>
-      ) : (
-        <div className="empty-results">
-          <h3>No matching workouts</h3>
-
-          <p>Try another muscle group.</p>
-
-          <button className="text-button" onClick={() => setCategory("All")}>
-            Clear filters
-          </button>
-        </div>
-      )}
+      </div>
     </section>
   );
 }

@@ -1,126 +1,53 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
 
-import {
-  Clock3,
-  Flame,
-  Star,
-  ArrowUpRight,
-  Bookmark,
-  Check,
-  X,
-} from "lucide-react";
-
-import { useState } from "react";
-import { useFitLog } from "@/context/FitLogContext";
-
 export default function ExerciseCard({ exercise }) {
-  const { saved, saveWorkout, removeFromSaved } = useFitLog();
-
-  const [toast, setToast] = useState(null);
-
-  const isSaved = saved.some((item) => item.id === exercise.id);
-
-  const showToast = (message, type = "success") => {
-    setToast({ message, type });
-
-    setTimeout(() => {
-      setToast(null);
-    }, 2200);
-  };
-
-  const handleSave = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (isSaved) {
-      removeFromSaved(exercise.id);
-      showToast("Removed from saved.", "success");
-      return;
-    }
-
-    const result = saveWorkout(exercise);
-
-    if (result.success) {
-      showToast("Saved for later.", "success");
-    } else {
-      showToast("Already saved.", "error");
-    }
-  };
-
   return (
-    <>
-      <div className="exercise-card">
-        <Link href={`/workout/${exercise.id}`}>
-          <div className="card-image">
-            <Image
-              src={exercise.image}
-              alt={exercise.title}
-              fill
-              sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
-            />
+    <Link
+      href={`/workout/${exercise.id}`}
+      className="group block overflow-hidden rounded-2xl border border-white/10 bg-[#111216] transition duration-300 hover:-translate-y-1 hover:border-lime-400/40"
+    >
+      {/* Image */}
+      <div className="relative h-64 overflow-hidden">
+        <img
+          src={exercise.image}
+          alt={exercise.title}
+          className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+        />
 
-            <span className="card-open">
-              <ArrowUpRight size={17} />
-            </span>
-          </div>
+        {/* Normal gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-70 transition duration-300 group-hover:opacity-100" />
 
-          <div className="card-content">
-            <div className="tag-row">
-              <span className="muscle-tag">{exercise.category}</span>
+        {/* Hover gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-lime-400/30 via-transparent to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
 
-              <span className="muscle-tag muted">
-                {exercise.secondaryCategory}
-              </span>
-            </div>
+        {/* Category */}
+        <div className="absolute left-4 top-4">
+          <span className="rounded-full bg-black/60 px-3 py-1 text-xs font-bold uppercase tracking-wider text-white backdrop-blur-sm">
+            {exercise.category}
+          </span>
+        </div>
 
-            <h3>{exercise.title}</h3>
-
-            <p className="equipment-label">{exercise.equipment}</p>
-
-            <div className="card-stats">
-              <span>
-                <Clock3 />
-                {exercise.time}
-              </span>
-
-              <span>
-                <Flame />
-                {exercise.calories}
-              </span>
-
-              <span>
-                <Star />
-                {exercise.rating}
-              </span>
-            </div>
-          </div>
-        </Link>
-
-        <div className="card-save-wrap">
-          <button
-            type="button"
-            className={`save-button ${isSaved ? "saved" : ""}`}
-            onClick={handleSave}
-          >
-            {isSaved ? <X size={14} /> : <Bookmark size={14} />}
-
-            <span>{isSaved ? "Saved" : "Save"}</span>
-          </button>
+        {/* Title */}
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-xl font-black uppercase tracking-tight text-white">
+            {exercise.title}
+          </h3>
         </div>
       </div>
 
-      {toast && (
-        <div className={`toast ${toast.type === "error" ? "toast-error" : ""}`}>
-          <span className="toast-icon">
-            {toast.type === "error" ? <X size={14} /> : <Check size={14} />}
+      {/* Content */}
+      <div className="p-5">
+        <div className="flex items-center justify-between text-sm">
+          <span className="text-zinc-400">
+            {exercise.secondaryCategory}
           </span>
 
-          <span>{toast.message}</span>
+          <span className="font-semibold text-lime-400">
+            {exercise.duration} min
+          </span>
         </div>
-      )}
-    </>
+      </div>
+    </Link>
   );
 }
+

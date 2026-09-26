@@ -1,38 +1,46 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
-import bannerImage from "./banner-img.png";
+import { ArrowDownRight } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="hero-wrap">
-      <div className="hero-copy">
-        <span className="eyebrow hero-eyebrow">WORKOUT LIBRARY</span>
-        <h1>
-          TRAIN WITH INTENT.
-          <br />
-          LOG EVERY SET.
-        </h1>
-        <p>
-          FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
-          into today&apos;s plan, and watch the week&apos;s work add up.
-        </p>
-        <div className="hero-actions">
-          <Link className="primary-button" href="#workouts">
-            Browse workouts <ArrowUpRight size={15} />
+    <section className="bg-[#0b0c10]">
+      <div className="mx-auto grid min-h-[650px] max-w-7xl items-center gap-12 px-5 py-24 md:grid-cols-2 lg:min-h-[720px]">
+        {/* Left */}
+        <div>
+          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.25em] text-lime-400">
+            Train smarter
+          </p>
+
+          <h1 className="max-w-3xl text-5xl font-black leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-8xl">
+            Train Better.
+            <br />
+            <span className="text-lime-400">Live Stronger.</span>
+          </h1>
+
+          <p className="mt-7 max-w-xl text-base leading-7 text-zinc-400 sm:text-lg">
+            Explore powerful exercises, build your workout plan, and stay
+            consistent with every session.
+          </p>
+
+          <Link
+            href="#library"
+            className="mt-9 inline-flex items-center gap-3 rounded-full bg-lime-400 px-6 py-3 font-bold text-black transition hover:bg-lime-300"
+          >
+            Explore Library
+            <ArrowDownRight size={18} />
           </Link>
         </div>
-      </div>
 
-      <div className="hero-visual" aria-hidden="true">
-        <Image
-          src={bannerImage}
-          alt="Fitlog-banner-img"
-          width={240}
-          height={240}
-          priority
-          className="hero-banner-image"
-        />
+        {/* Right image */}
+        <div className="relative h-[380px] overflow-hidden rounded-3xl md:h-[520px]">
+          <img
+            src="/images/banner-img.png"
+            alt="Workout"
+            className="h-full w-full object-cover"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        </div>
       </div>
     </section>
   );

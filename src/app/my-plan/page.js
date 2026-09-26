@@ -1,213 +1,91 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { Dumbbell, Check, X, Clock3, Flame, Star } from "lucide-react";
 import { useState } from "react";
-import { useFitLog } from "../../context/FitLogContext";
+import { ChevronDown, Dumbbell } from "lucide-react";
 
-const MyPlan = () => {
-  const {
-    plan,
-    saved,
-    removeFromPlan,
-    removeFromSaved,
-  } = useFitLog();
+const sortOptions = ["Duration", "Calories", "Rating"];
 
-  const [activeTab, setActiveTab] = useState("plan");
-  const [sortBy, setSortBy] = useState("duration");
-
-  const totalMinutes = plan.reduce(
-    (total, exercise) =>
-      total + parseInt(exercise.duration || exercise.time || 0, 10),
-    0
-  );
-
-  const totalCalories = plan.reduce(
-    (total, exercise) =>
-      total + parseInt(exercise.calories || 0, 10),
-    0
-  );
-
-  const handleDone = (id) => {
-    removeFromPlan(id);
-  };
-
-  const currentList = [...(activeTab === "plan" ? plan : saved)].sort((a,b) => sortBy === "rating" ? Number(b.rating) - Number(a.rating) : parseInt(a.duration || a.time, 10) - parseInt(b.duration || b.time, 10));
+export default function MyPlan() {
+  const [sortBy, setSortBy] = useState("Duration");
+  const [open, setOpen] = useState(false);
 
   return (
-    <main className="plan-page">
-      <div>
-
+    <main className="min-h-screen bg-[#0b0c10] px-5 py-12 text-white">
+      <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-10">
-          <div className="plan-intro"><h1>MY PLAN</h1>
-          <p>
-            Cap of five lifts for today. Finish them, then load more.
-          </p>
-          </div>
-        </div>
-
-        {/* Metrics */}
-        <div className="metric-grid">
-
-          <div className="metric"><span>Exercises</span><strong>{plan.length}</strong></div>
-
-          <div className="metric"><span>Minutes</span><strong>{totalMinutes}</strong></div>
-
-          <div className="metric"><span>Calories</span><strong>{totalCalories}</strong></div>
-
-        </div>
-
-        {/* Tabs */}
-        <div className="plan-controls"><div className="plan-tabs">
-
-          <button
-            onClick={() => setActiveTab("plan")}
-            className={
-              activeTab === "plan"
-                ? "active"
-                : ""
-            }
-          >
-            Today&apos;s Plan
-          </button>
-
-          <button
-            onClick={() => setActiveTab("saved")}
-            className={
-              activeTab === "saved"
-                ? "active"
-                : ""
-            }
-          >
-            Saved
-          </button>
-
-        </div><label className="sort-control">Sort by <select value={sortBy} onChange={(event)=>setSortBy(event.target.value)}><option value="duration">Duration</option><option value="rating">Rating</option></select></label></div>
-
-        {/* Empty State */}
-        {currentList.length === 0 ? (
-          <div className="plan-empty"><Dumbbell size={24}/>
-
-            <h2>
-              NOTHING HERE YET
-            </h2>
-
-            <p>
-              Browse the library and add a lift to get today moving.
+        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-lime-400">
+              MY PLAN
             </p>
 
-            <Link
-              href="/"
-              className=""
+            <h1 className="text-4xl font-black tracking-tight sm:text-5xl">
+              Your Workout Plan
+            </h1>
+
+            <p className="mt-3 max-w-xl text-zinc-400">
+              Keep your favorite workouts organized and ready for your next
+              training session.
+            </p>
+          </div>
+
+          {/* Sort */}
+          <div className="relative w-full md:w-52">
+            <button
+              onClick={() => setOpen(!open)}
+              className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#111216] px-4 py-3 text-sm font-semibold text-white transition hover:border-lime-400/40"
             >
-              Go to workouts
-            </Link>
+              <span>
+                Sort by: <span className="text-lime-400">{sortBy}</span>
+              </span>
 
-          </div>
-        ) : (
+              <ChevronDown
+                size={18}
+                className={`transition ${open ? "rotate-180" : ""}`}
+              />
+            </button>
 
-          /* Workout List */
-          <div className="plan-list">
-
-            {currentList.map((exercise) => (
-              <div
-                key={exercise.id}
-                className="plan-row"
-              >
-
-                {/* Image */}
-                <div>
-                  <Image
-                    src={exercise.image}
-                    alt={exercise.title}
-                    width={320}
-                    height={180}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="flex-1">
-
-                  <div className="tag-row">
-                    <span className="muscle-tag">
-                      {exercise.category}
-                    </span>
-
-                    <span className="muscle-tag muted">
-                      {exercise.secondaryCategory}
-                    </span>
-                  </div>
-
-                  <h2>
-                    {exercise.title}
-                  </h2>
-
-                  <p>
-                    {exercise.equipment}
-                  </p>
-
-                  <div className="row-stats">
-                    <span>
-                      <Clock3 size={12}/> {exercise.duration || exercise.time}
-                    </span>
-
-                    <span>
-                      <Flame size={12}/> {exercise.calories}
-                    </span>
-
-                    <span>
-                      <Star size={12}/> {exercise.rating}
-                    </span>
-                  </div>
-
-                </div>
-
-                {/* Actions */}
-                <div className="row-actions">
-
-                  <Link
-                    href={`/workout/${exercise.id}`}
-                    className=""
-                  >
-                    View Details
-                  </Link>
-
-                  {activeTab === "plan" && (
-                    <button
-                      onClick={() => handleDone(exercise.id)}
-                      className="done"
-                    >
-                      <Check size={14} />
-                      Mark as Done
-                    </button>
-                  )}
-
+            {open && (
+              <div className="absolute right-0 z-20 mt-2 w-full overflow-hidden rounded-xl border border-white/10 bg-[#15161b] p-1 shadow-2xl">
+                {sortOptions.map((option) => (
                   <button
-                    onClick={() =>
-                      activeTab === "plan"
-                        ? removeFromPlan(exercise.id)
-                        : removeFromSaved(exercise.id)
-                    }
-                    className="remove"
+                    key={option}
+                    onClick={() => {
+                      setSortBy(option);
+                      setOpen(false);
+                    }}
+                    className={`w-full rounded-lg px-4 py-3 text-left text-sm transition ${
+                      sortBy === option
+                        ? "bg-lime-400 text-black"
+                        : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                    }`}
                   >
-                    <X size={14} />
-                    Remove
+                    {option}
                   </button>
-
-                </div>
-
+                ))}
               </div>
-            ))}
-
+            )}
           </div>
-        )}
+        </div>
 
+        {/* Plan content */}
+        <div className="rounded-2xl border border-white/10 bg-[#101115] p-6">
+          {/* তোমার existing workout cards/list এখানে */}
+
+          <div className="flex min-h-[300px] flex-col items-center justify-center text-center">
+            <div className="mb-4 rounded-full bg-lime-400/10 p-4">
+              <Dumbbell className="text-lime-400" size={28} />
+            </div>
+
+            <h2 className="text-xl font-bold">Your plan is empty</h2>
+
+            <p className="mt-2 max-w-md text-sm text-zinc-500">
+              Save exercises from the workout library to build your personal
+              workout plan.
+            </p>
+          </div>
+        </div>
       </div>
     </main>
   );
-};
-
-export default MyPlan;
+}
